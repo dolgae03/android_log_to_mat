@@ -1,0 +1,3 @@
+[submodule "gnss_lib_py"]
+	path = gnss_lib_py
+	url = https://github.com/dolgae03/gnss_lib_py
