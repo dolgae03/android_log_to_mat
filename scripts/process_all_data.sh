@@ -11,5 +11,5 @@ for file in "$RAW_DIR"/*; do
     filename=$(basename "$file")
 
     # python 스크립트 실행
-    python3 test.py -n "$filename" -c
+    python3 test.py -n "$filename"
 done
