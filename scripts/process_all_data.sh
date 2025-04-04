@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # raw 데이터 디렉토리 지정
-cd ..
 
 RAW_DIR="./data/raw"
 
@@ -11,5 +10,5 @@ for file in "$RAW_DIR"/*; do
     filename=$(basename "$file")
 
     # python 스크립트 실행
-    python3 test.py -n "$filename"
+    python3 test.py -n "$filename" -c
 done
