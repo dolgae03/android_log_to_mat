@@ -1,3 +1,20 @@
 data/
 ephemeris/
 fig/
+
+# Editor settings
+.vscode/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Test/cache artifacts
+.pytest_cache/
+.coverage
+
+# Local parser outputs
+rebuilt_txt_parser/output/
+
+# Local sample logs
+/29740_gnss_log_2025_05_07_15_36_12.txt

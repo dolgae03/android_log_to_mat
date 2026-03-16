@@ -30,7 +30,7 @@ from gnss_lib_py.utils.sv_models import add_sv_states
 from gnss_lib_py.utils.time_conversions import get_leap_seconds
 from gnss_lib_py.utils.time_conversions import unix_to_gps_millis
 
-class AndroidRawGnss:
+class AndroidRawGnss(NavData):
     """Handles Raw GNSS measurements from Android.
 
     Data types in the Android's GNSSStatus messages are documented on
@@ -180,7 +180,6 @@ class AndroidRawGnss:
 
         # add gps milliseconds
         self.df["gps_millis"] = unix_to_gps_millis(self.df["utcTimeMillis"])
-
         # 주(週) 나노초 단위 상수
         WEEK_NANOS = consts.WEEKSEC * int(1e9)
         # ────────────────── ① 점프 탐지 & 세그먼트 ID 생성
@@ -228,7 +227,7 @@ class AndroidRawGnss:
                              tx_rx_beidou_secs,
                              t_rx_ns)
         print('beidou', type(t_rx_ns[0]))
-
+        # input('enter')
         # galileo constellation
         # nanos_per_100ms = 100*1E6
         # ms_number_nanos = np.floor(-self.df["FullBiasNanos"]/nanos_per_100ms)*nanos_per_100ms
@@ -356,6 +355,7 @@ class AndroidRawGnss:
         #     input('enter')
 
         self.df["raw_pr_m"] = raw_pr_m
+        self.df["gps_millis_tx"] = self.df["gps_millis"] - self.df["raw_pr_m"] / consts.C * 1000
 
         # 5. (선택) 불확도 등 추가
         self.df["raw_pr_sigma_m"] = consts.C * 1e-9 * self.df["ReceivedSvTimeUncertaintyNanos"]
