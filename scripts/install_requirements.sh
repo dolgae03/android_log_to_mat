@@ -1,21 +1,21 @@
-# 1. conda 환경 생성
-conda create -n myenv python=3.9.13 -y
-source ~/anaconda3/etc/profile.d/conda.sh 
+#!/bin/bash
 
-# 2. 환경 활성화
-conda activate myenv
+set -eu
 
-cd gnss_lib_py
+CONDA_BIN="${CONDA_BIN:-/home/user/anaconda3/bin/conda}"
+ENV_NAME="${ENV_NAME:-gnss-parser}"
 
-# 3. poetry 설치 (conda 환경 안에서)
-pip install poetry
-pip install -r requirements.txt
+if [ ! -x "$CONDA_BIN" ]; then
+    echo "conda not found at $CONDA_BIN"
+    echo "Set CONDA_BIN to your conda executable path and rerun."
+    exit 1
+fi
 
-# 4. poetry로 의존성 설치 (pyproject.toml 기준)
-poetry install
+"$CONDA_BIN" create -y -n "$ENV_NAME" python=3.10 pandas
 
-cd ..
-pip install -r requirements.txt
+cat <<EOF
+Conda environment created: $ENV_NAME
 
-# 5. ./data 폴더 생성
-mkdir -p ./data
+Run the parser with:
+  PYTHONPATH=./src /home/user/mskim/.conda/envs/$ENV_NAME/bin/python -m gnss_txt_parser
+EOF

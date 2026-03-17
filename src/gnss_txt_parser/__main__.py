@@ -1,4 +1,4 @@
-from rebuilt_txt_parser.parser import main
+from gnss_txt_parser.parser import main
 
 
 if __name__ == "__main__":

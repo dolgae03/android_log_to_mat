@@ -1,2 +1,2 @@
-dash
-simplekml
+# Optional helper dependency for dataframe inspection and comparisons.
+pandas>=2.0

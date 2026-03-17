@@ -1,6 +1,6 @@
 # CSV Handoff Guide
 
-이 문서는 다른 GPT 또는 외부 처리기에게 `rebuilt_txt_parser` 산출물을 넘길 때 사용하는 설명서입니다.
+이 문서는 다른 GPT 또는 외부 처리기에게 `gnss_txt_parser` 산출물을 넘길 때 사용하는 설명서입니다.
 
 ## 핵심 요약
 

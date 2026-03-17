@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
-from src.data_class import Measurement, MeasurementValue, SatelliteInfo, TimeTag
+from gnss_txt_parser.data_class import Measurement, MeasurementValue, SatelliteInfo, TimeTag
 
 
 C = 299_792_458.0
@@ -399,7 +399,7 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-o",
         "--output",
-        default="rebuilt_txt_parser/output/29740_gnss_log_2025_05_07_15_36_12.tsv",
+        default="data/results/tsv/29740_gnss_log_2025_05_07_15_36_12.tsv",
         help="Output TSV path.",
     )
     parser.add_argument(

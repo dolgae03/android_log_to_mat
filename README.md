@@ -1,57 +1,43 @@
-# android_log_to_mat
+# GNSS TXT Parser
 
-`android_log_to_mat`는 안드로이드 로그 데이터를 `.mat` 형식으로 변환하는 도구입니다.  
-주로 MATLAB이나 Python에서 로그 데이터를 분석할 수 있도록 돕습니다.
+이 레포의 현재 메인 코드 경로는 `src/gnss_txt_parser/` 입니다.
 
----
+Android GNSS Logger `.txt` 파일에서 `Raw` 섹션을 파싱하고, 측정치를 `Measurement` 기반 TSV로 변환합니다.
 
-## 📦 설치 방법
+## Main Path
 
-필요한 패키지들을 설치하려면 아래 스크립트를 실행하세요:
+- 메인 패키지: `src/gnss_txt_parser/`
+- 메인 출력 포맷: 탭 구분 TSV
+- 메인 결과 디렉토리: `data/results/tsv/`
+- 레거시 코드: `legacy/`
 
-```bash
-bash ./scripts/install_requirements.sh
-```
+## Quick Start
 
----
-
-## 📂 데이터 준비
-
-변환하고자 하는 `.txt` 로그 파일들을 `./data/raw` 디렉토리에 넣습니다.
+샘플 파일 실행:
 
 ```bash
-# 예시
-./data/raw/sample_log.txt
+PYTHONPATH=./src python3 -m gnss_txt_parser
 ```
 
----
-
-## 🚀 전체 데이터 처리
-
-로그 파일들을 `.mat` 형식으로 변환하려면 프로젝트 상위 디렉토리에서 아래 명령어를 실행하세요:
+직접 입력/출력 지정:
 
 ```bash
-cd ..
-bash process_all_data.sh
+PYTHONPATH=./src python3 -m gnss_txt_parser ./some_log.txt -o ./data/results/tsv/result.tsv
 ```
 
-스크립트가 자동으로 `./data/raw` 디렉토리 내의 모든 `.txt` 파일을 처리하여 `.mat` 파일로 저장합니다.
+## Output
 
----
+출력은 `Measurement.headers()` 순서를 따르는 테이블입니다.
 
-## 📁 결과
+- 이미 채워지는 값: 시간 태그, constellation/prn, signal id, pseudorange, phase, doppler, snr, loi
+- 아직 비어 있는 값: 위성 위치/속도, 위성 clock bias/drift, pr correction, ground truth
 
-변환된 `.mat` 파일은 프로젝트 내부의 지정된 출력 폴더에 저장됩니다. 저장 경로는 사용자의 구현에 따라 다를 수 있습니다.
+다른 모델로 후처리할 때는 아래 문서를 참고하면 됩니다.
 
----
+- 핸드오프 설명: `docs/CSV_HANDOFF.md`
+- JSON 스펙 출력: `PYTHONPATH=./src python3 -m gnss_txt_parser.handoff_schema --format json`
 
-## 🛠️ 기타
+## Legacy
 
-- Python 3.x 필요
-- MATLAB(R) 또는 `.mat` 파일을 읽을 수 있는 Python 환경 필요 (`scipy.io` 등)
-
----
-
-## 📞 문의
-
-추가 문의 사항이 있다면 언제든지 이슈를 등록해주세요!
+이전 변환기와 실험 스크립트는 `legacy/` 로 이동했습니다.
+비교, 참고, 회귀 확인용으로만 유지합니다.

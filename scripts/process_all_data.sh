@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# raw 데이터 디렉토리 지정
+set -eu
 
-RAW_DIR="./data/raw"
+RAW_DIR="${1:-./data/raw}"
+OUT_DIR="${2:-./data/results/tsv}"
+PYTHONPATH_PREFIX="${PYTHONPATH:-}"
 
-# raw 디렉토리 내 모든 파일 순회
-for file in "$RAW_DIR"/*; do
-    # 파일명만 추출
+mkdir -p "$OUT_DIR"
+
+for file in "$RAW_DIR"/*.txt; do
+    [ -e "$file" ] || continue
     filename=$(basename "$file")
-
-    # python 스크립트 실행
-    python3 test.py -n "$filename" -c --debug
+    stem="${filename%.txt}"
+    PYTHONPATH="./src${PYTHONPATH_PREFIX:+:$PYTHONPATH_PREFIX}" python3 -m gnss_txt_parser "$file" -o "$OUT_DIR/${stem}.tsv"
 done
